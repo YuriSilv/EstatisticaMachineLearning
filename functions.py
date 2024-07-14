@@ -73,3 +73,39 @@ def variance(values:list, is_population = False):
 
 def std(values:list, is_population = False ):
     return math.sqrt(variance(values, is_population))
+
+def cv(values:list, **kwargs):
+    return std(values, kwargs) / mean(values)
+
+def corr(values1:list, values2:list):
+    x_mean = mean(values1)
+    y_mean = mean(values2)
+
+    num_items = len(values1)
+
+    if num_items != len(values2):
+        raise print('Conjuntos de tamanhos diferentes')
+
+    num = 0
+    den_x = 0
+    den_y = 0
+    for v_index in range(num_items):
+        dist_x = values1[v_index] - x_mean
+        dist_y = values2[v_index] - y_mean
+
+        num_n = dist_x * dist_y
+
+        dist_square_x = dist_x ** 2
+        dist_square_y = dist_y ** 2
+
+        den_x += dist_square_x
+        den_y += dist_square_y
+
+        num += num_n
+
+    den = math.sqrt((den_x * den_y))
+    corr = num / den
+
+    return corr
+
+        
