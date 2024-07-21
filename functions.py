@@ -108,4 +108,23 @@ def corr(values1:list, values2:list):
 
     return corr
 
+def outliers(values:list, method = '2sd'):
+
+    if method == '2sd':
+        avg = mean(values)
+        sd2 = std(values) * 2
+        outlier = [x for x in values if x > avg + sd2 or x < avg - sd2]
+
+        return outlier
+    
+    elif method == 'iqr':
+        q3 = quartil(values, 0.75)
+        q1 = quartil(values, 0.25)
+        iqr = q3 - q1
+        lower_bound = q1 - 1.5 * iqr
+        upper_bound = q3 + 1.5 * iqr
+        outlier = [x for x in values if x < lower_bound or x > upper_bound]
+
+        return outlier
+
         
